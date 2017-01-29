@@ -2,8 +2,16 @@
 title: "Regression Models Project"
 author: "E.T. Moseley"
 date: "January 28, 2017"
-output: html_document
+output: pdf_document
 ---
+
+#Executive Summary
+
+In this analysis, we will generate two models to explain differences in mileage per gallon using the mtcars data set. Our first linear model includes only the transmission to predict mileage per gallon. Our second linear fit includes weight in addition to the transmission type.
+
+Furthermore, we have determined that a manual transmission is associated with an increase in gas mileage on average of 7.25 mpg (disregarding all other variables).
+
+#Exploratory Data Analysis
 
 In this analysis, we will be exploring the "mtcars" dataset to determine what variables are associated with increased or decreased mileage per gallon. Precisely, we will be investigating what relationship (if any) the transmission, automatic or manual, has on the miles per gallon.
 
@@ -34,18 +42,14 @@ A data frame with 32 observations on 11 variables.
 [,11]	carb	Number of carburetors
 
 
-#Exploratory Data Analysis
-
 ```{r}
 attach(mtcars)#Load data
 
-summary(mtcars)
+str(mtcars)
 ```
 
-We will plot all variables against all others to look for any obvious relationships.
-
-```{r}
-pairs(mtcars, main = "mtcars")
+```{r, echo=FALSE}
+#pairs(mtcars, main = "mtcars")
 ```
 
 Let's see if there may be a relationship between miles per gallon and transmission:
@@ -91,10 +95,6 @@ summary(fit2)$coefficients
 
 Here, weight seems to be more predictive of mileage per gallon than does the transmittion type, with P-values of 1.87e-07 and 9.88e-01, respectively.
 
-#Executive Summary
-
-In this analysis, we generated two models to explain differences in mileage per gallon using the mtcars data set. Our first linear model included only the transmission to predict mileage per gallon. Our second linear fit included weight in addition to the transmission type.
-
 We can now test to determine if these two models are distinct.
 
 ```{r}
@@ -103,15 +103,12 @@ anova(fit, fit2, test="Chisq")
 
 In this case, with the addition of wt to the model, the probability that the variation in predictions in either model is due only to chance is 1.12e-11, which is insignificant.
 
-Furthermore, we have determined that a manual transmission is associated with an increase in gas mileage on average of 7.25 mpg (disregarding all other variables).
-
 #Apprendix
 ##Residual plots for fit (mpg ~ am) and fit2 (mpg ~ am + wt)
 
 ```{r}
+par(mfrow=c(2,2))
 plot(fit)
 
-
 plot(fit2)
-
 ```
